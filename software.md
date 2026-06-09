@@ -43,3 +43,20 @@ install.packages(c(
 
 Installation may take a few minutes the first time, as some packages have compiled components.
 If you are prompted to install from source, accepting the pre-compiled binary is usually the simpler option.
+
+## Installing the course package
+
+This course uses a custom R package, `immr`, which provides datasets and helper functions used throughout the workshop.
+It is not on CRAN and must be installed directly from GitHub.
+
+First install the `remotes` package if you do not already have it:
+
+```r
+install.packages("remotes")
+```
+
+Then install `immr` from GitHub:
+
+```r
+remotes::install_github("mark-andrews/immr-rpkg")
+```
