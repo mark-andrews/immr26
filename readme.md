@@ -58,3 +58,7 @@ Understand how multilevel models partition variance between levels.
 
 Learn how to perform power analysis for multilevel studies.
 Ensure your sample size is sufficient for reliable inference.
+
+## Guides
+
+Workshop guides and slides are available [here](https://courses.mjandrews.org/immr/).
