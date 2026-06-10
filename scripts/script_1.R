@@ -47,3 +47,11 @@ ICC <- variances[1]/sum(variances)
 # these are the "mu" values, i.e. country specific means
 coef(M_8)
 ranef(M_8)
+
+
+# Multilevel linear model, aka linear mixed effects -----------------------
+
+ggplot(pvtrt, aes(x = day, y = rt, colour = id)) +
+  geom_point() +
+  geom_smooth(method = 'lm', se = FALSE) +
+  facet_wrap(~id) 
