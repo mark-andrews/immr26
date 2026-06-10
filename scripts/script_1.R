@@ -55,3 +55,22 @@ ggplot(pvtrt, aes(x = day, y = rt, colour = id)) +
   geom_point() +
   geom_smooth(method = 'lm', se = FALSE) +
   facet_wrap(~id) 
+# 
+M_9 <- lmer(rt ~ day + (day|id), data = pvtrt)
+summary(M_9)
+
+coef(M_9)
+
+
+# random slopes, random intercepts, no correlation
+M_10 <- lmer(rt ~ day + (day||id), data = pvtrt)
+summary(M_10)
+
+# null hypothesis test on correlation coefficient
+anova(M_10, M_9)
+
+M_11 <- lmer(rt ~ day + (1|id), data = pvtrt)
+summary(M_11)
+
+
+anova(M_11, M_10)
