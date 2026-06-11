@@ -88,3 +88,37 @@ r2_nakagawa(M_9)
 
 science_df <- read_csv("https://raw.githubusercontent.com/mark-andrews/immr26/refs/heads/main/data/science.csv") |> 
   mutate(like2 = factor(like, ordered = TRUE))
+
+M_28 <- lmer(like ~ PrivPub + (1|school), data = science_df)
+
+library(ordinal)
+M_29 <- clmm(like2 ~ PrivPub + (1|school), data = science_df)
+  
+
+# Power analysis / sample size determination ------------------------------
+library(pwr)
+# if every power analysis could be as easy as this
+pwr.t.test(n=100, d = 0.3)
+
+# We'll do power analysis for this model
+# lmer(rt ~ day + (day|id), data = pvtrt)
+
+
+fixed_b <- c(250, 5)
+
+V <- matrix(c(600, 0,
+              0, 35), nrow=2)
+
+s <- 25
+
+library(simr)
+
+fake_model <- makeLmer(
+  y ~ day + (day|id),
+  data = pvtrt,
+  fixef = fixed_b,
+  VarCorr = V,
+  sigma = s
+)
+
+powerSim(fake_model, test = fixed("day"), nsim = 1000)
