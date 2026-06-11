@@ -52,9 +52,39 @@ M_24 <- lmer(rt ~ freq + (freq|participant), data = blp_short2)
 M_25 <- lmer(rt ~ freq + (freq|item), data = blp_short2)
 
 
-M_26 <- lmer(rt ~ freq + (1|item) + (freq|participant), data = blp_short2)
+M_26 <- lmer(rt ~ freq + (1|item) + (freq|participant), 
+             data = mutate(blp_short2, freq = scale(freq)[,1]))
+
+summary(M_26)
 
 
+# R^2 in multilevel linear models, linear mixed effects models ------------
+
+# R^2 in good old fashioned linear models
+M_27 <- lm(dist ~ speed, data = cars)
+summary(M_27)$r.sq
+
+var(cars$dist)
+var(predict(M_27))
+var(predict(M_27)) / var(cars$dist)
+
+var(predict(M_27)) /(var(predict(M_27)) + var(residuals(M_27)))
+
+# prediction in linear mixed effects models
+predict(M_9) |> head()
+add_predictions(pvtrt, model = M_9)
+
+predict(M_9, re.form = NA) |> head() # fixed effects only used for predictions
+
+# rough estimate of MARGINAL R^2
+var(predict(M_9, re.form = NA)) / var(pvtrt$rt)
+
+# rough estimate of CONDITIONAL R^2
+var(predict(M_9)) / var(pvtrt$rt)
+
+library(performance)
+r2_nakagawa(M_9)
 
 
-
+science_df <- read_csv("https://raw.githubusercontent.com/mark-andrews/immr26/refs/heads/main/data/science.csv") |> 
+  mutate(like2 = factor(like, ordered = TRUE))
