@@ -89,11 +89,31 @@ anova(M_11, M_9)
 
 # random slopes only
 M_12 <- lmer(rt ~ 1 + day + (0 + day|id), data = pvtrt)
+add_predictions(pvtrt, model = M_12) |> 
+  ggplot(aes(x = day, y = rt, colour = id)) + geom_point() +
+  geom_line(aes(y = pred))
+
+add_predictions(pvtrt, model = M_12) |> 
+  ggplot(aes(x = day, y = rt, colour = id)) + geom_point() +
+  geom_line(aes(y = pred)) +
+  facet_wrap(~id)
+
+anova(M_12, M_10)
 
 
+M_13 <- lmer(rt ~ 1 + (day|id), data = pvtrt)
+anova(M_13, M_9)
+
+library(lmerTest)
+
+# M_9 <- lmer(rt ~ day + (day|id), data = pvtrt)
+M_14 <- lmer(rt ~ day + (day|id), data = pvtrt)
+# lmerTest::lmer(rt ~ day + (day|id), data = pvtrt)
+
+confint(M_14)
 
 
-
-
+M_15 <- lmer(mathscore ~ ses + (ses|schoolid), data = classroom)
+summary(M_15)
 
 
