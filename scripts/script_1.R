@@ -77,3 +77,23 @@ anova(M_11, M_10)
 
 library(modelr)
 add_predictions(pvtrt, model = M_11) |> 
+  ggplot(aes(x = day, y = rt, colour = id)) + geom_point() +
+  geom_line(aes(y = pred))
+
+add_predictions(pvtrt, model = M_11) |> 
+  ggplot(aes(x = day, y = rt, colour = id)) + geom_point() +
+  geom_line(aes(y = pred)) +
+  facet_wrap(~id)
+
+anova(M_11, M_9)
+
+# random slopes only
+M_12 <- lmer(rt ~ 1 + day + (0 + day|id), data = pvtrt)
+
+
+
+
+
+
+
+
