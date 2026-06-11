@@ -70,7 +70,10 @@ summary(M_10)
 anova(M_10, M_9)
 
 M_11 <- lmer(rt ~ day + (1|id), data = pvtrt)
+# M_11_alt <- lmer(rt ~ 1 + day + (1|id), data = pvtrt)
 summary(M_11)
 
-
 anova(M_11, M_10)
+
+library(modelr)
+add_predictions(pvtrt, model = M_11) |> 
